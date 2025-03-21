@@ -5,9 +5,13 @@
     <th:block th:replace="fragments/head :: head('Homepage')"></th:block>
 </head>
 
-<body>
+<body class="text-center">
 
-    <h1>Questa è la homepage</h1>
+    <h1 class="mt-5">Questa è la nostra Pizzeria</h1>
+
+    <div class="mt-5 ">
+        <a class="btn btn-primary fs-3" th:href="@{/pizzas}">Guarda il nostro Menù</a>
+    </div>
 
 </body>
 

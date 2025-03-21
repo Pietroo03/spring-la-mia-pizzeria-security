@@ -6,9 +6,12 @@
 </head>
 
 <body>
+
+    <th:block th:replace="fragments/header :: header"></th:block>
+
     <div class="container mt-5">
         <h1 class="text-center mb-4">Menù Pizze</h1>
-        <a href="/pizzas/create" class="btn btn-primary mb-4">Aggiungi una Pizza</a>
+
         <div class="row">
             <div class="col-md-4 mb-4" th:if="${pizzas.size() > 0}" th:each="pizza : ${pizzas}" th:object="${pizza}">
                 <div class="card h-100">

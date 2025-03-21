@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: head"></th:block>
+</head>
+
+<body>
+    <header th:fragment="header" class="p-4 bg-light">
+        <nav class="navbar">
+            <div class="container-fluid">
+
+                <h1>La pizzeria di Pietro</h1>
+
+                <div class="d-flex gap-4">
+                    <a class="btn btn-primary" th:href="@{/pizzas/create}">Aggiungi Pizza</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+</body>
+
+</html>
