@@ -5,9 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizzas")
@@ -21,12 +22,14 @@ public class Pizza {
     private String nome;
 
     @NotBlank(message = "La descrizione non può essere vuota")
+    @Size(max = 255, message = "La descrizione non può superare i 255 caratteri")
     private String descrizione;
 
+    @NotBlank(message = "Inserisci un URL valido")
     private String foto;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Inserisci il prezzo")
+    @Min(value = 1, message = "Il prezzo deve essere maggiore di 1")
     private Integer prezzo;
 
     public Integer getId() {
