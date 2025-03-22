@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
@@ -24,10 +25,18 @@ public class PizzaController {
     private PizzaRepository repository;
 
     @GetMapping
-    public String index(Model model) {
-        List<Pizza> pizzas = repository.findAll();
+    public String index(@RequestParam(name = "search", required = false, defaultValue = "") String search,
+            Model model) {
+        List<Pizza> pizzas;
+
+        if (!search.isEmpty()) {
+            pizzas = repository.findByNomeContainingIgnoreCase(search);
+        } else {
+            pizzas = repository.findAll();
+        }
 
         model.addAttribute("pizzas", pizzas);
+        model.addAttribute("search", search);
         return "Pizzas/index";
     }
 

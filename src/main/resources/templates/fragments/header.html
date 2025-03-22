@@ -13,6 +13,12 @@
                 <h1>La pizzeria di Pietro</h1>
 
                 <div class="d-flex gap-4">
+                    <form th:action="@{/pizzas}" method="get" class="d-flex">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Cerca una pizza..."
+                            th:value="${search}">
+                        <button type="submit" class="btn btn-outline-primary">Cerca</button>
+                    </form>
+
                     <a class="btn btn-primary" th:href="@{/pizzas/create}">Aggiungi Pizza</a>
                 </div>
             </div>
