@@ -5,14 +5,15 @@
     <th:block th:replace="fragments/head :: head(${pizza.nome})"></th:block>
 </head>
 
-<body>
-    <div class="container mt-5">
+<body th:object="${pizza}">
+    <div class=" container mt-5">
 
 
-        <div th:if="${pizza != null}" th:object="${pizza}">
-            <h1 class="text-center mb-4" th:text="*{nome}"></h1>
-            <div class="card mx-auto" style="max-width: 600px;">
-                <img th:src="*{foto}" class="card-img-top" style="height: 200px; object-fit: cover;"
+        <div th:if="${pizza != null} ">
+            <h1 class=" text-center mb-4" th:text="*{nome}">
+            </h1>
+            <div class="card mx-auto my-4" style="max-width: 800px;">
+                <img th:src="*{foto}" class="card-img-top" style="height: 350px; object-fit: cover;"
                     alt="Immagine pizza">
                 <div class="card-body">
                     <h5 class="card-title" th:text="*{nome}"></h5>
@@ -20,9 +21,9 @@
                     <p class="card-text fw-bold">Prezzo: €<span th:text="*{prezzo}"></span></p>
                     <div class="d-flex justify-content-around">
                         <a th:href="@{/pizzas}" class="btn btn-secondary">Torna al Menù</a>
-                        <a th:href="@{/pizzas/edit/{id} (id = ${pizza.id})}" class="btn btn-success">Modifica
-                            pizza</a>
-
+                        <a th:href="@{/pizzas/edit/{id} (id = ${pizza.id})}" class="btn btn-warning">Modifica pizza</a>
+                        <a th:href="@{/pizzas/{id}/new_offer (id = ${pizza.id})}" class="btn btn-primary">Aggiungi
+                            offerta speciale</a>
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -61,8 +62,53 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Offerte Speciali</h1>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-4" th:if="${pizza.offerteSpeciali.size() > 0}"
+                th:each="offerta : ${pizza.offerteSpeciali}">
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-body ">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title text-primary fw-bold" th:text="${offerta.nome}"></h5>
+                            <a th:href="@{/offers/edit/{id} (id = ${offerta.id})}" class="btn btn-warning">Modifica
+                                offerta</a>
+                        </div>
+                        <hr>
+                        <p class="card-text">
+                            <strong>📅 Data Inizio:</strong>
+                            <span th:text="${#temporals.format(offerta.dataInizio, 'dd/MM/yyyy')}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>📅 Data Fine:</strong>
+                            <span th:text="${#temporals.format(offerta.dataFine, 'dd/MM/yyyy')}"></span>
+                        </p>
+
+                        <p class="card-text fw-bold text-white p-2 rounded text-center"
+                            th:classappend="${offerta.dataFine.isAfter(T(java.time.LocalDate).now())} ? 'bg-success' : 'bg-danger'">
+                            <span
+                                th:text="${offerta.dataFine.isAfter(T(java.time.LocalDate).now()) ? 'Offerta attiva!' : 'Offerta scaduta' }"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12" th:unless="${pizza.offerteSpeciali.size() > 0}">
+                <div class="alert alert-warning text-center shadow-sm">
+                    <h4 class="mb-0">😞 Nessuna offerta speciale disponibile</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </body>

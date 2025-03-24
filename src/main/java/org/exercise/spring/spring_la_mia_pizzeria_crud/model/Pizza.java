@@ -1,9 +1,12 @@
 package org.exercise.spring.spring_la_mia_pizzeria_crud.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -32,12 +35,23 @@ public class Pizza {
     @Min(value = 1, message = "Il prezzo deve essere maggiore di 0")
     private Integer prezzo;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<OffertaSpeciale> offerteSpeciali;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<OffertaSpeciale> getOfferteSpeciali() {
+        return offerteSpeciali;
+    }
+
+    public void setOfferteSpeciali(List<OffertaSpeciale> offerteSpeciali) {
+        this.offerteSpeciali = offerteSpeciali;
     }
 
     public String getNome() {
