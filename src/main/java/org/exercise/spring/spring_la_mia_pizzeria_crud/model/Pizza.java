@@ -29,7 +29,7 @@ public class Pizza {
     private String foto;
 
     @NotNull(message = "Inserisci il prezzo")
-    @Min(value = 1, message = "Il prezzo deve essere maggiore di 1")
+    @Min(value = 1, message = "Il prezzo deve essere maggiore di 0")
     private Integer prezzo;
 
     public Integer getId() {
