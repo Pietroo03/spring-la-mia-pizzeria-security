@@ -52,7 +52,7 @@
                             <h5 class="card-title text-primary fw-bold" th:text="${offerta.nome}"></h5>
                             <div>
                                 <a th:href="@{/offers/edit/{id} (id = ${offerta.id})}"
-                                    class="btn btn-warning">Modifica</a>
+                                    class="btn btn-sm btn-warning">Modifica</a>
                                 <!-- Button trigger modal -->
                                 <th:button th:replace="fragments/delete-button :: button(${offerta.id})"></th:button>
 
