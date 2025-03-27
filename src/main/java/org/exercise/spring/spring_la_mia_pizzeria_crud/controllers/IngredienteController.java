@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.Ingrediente;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.Pizza;
-import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.IngredienteRepository;
+import org.exercise.spring.spring_la_mia_pizzeria_crud.service.IngredienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 public class IngredienteController {
 
     @Autowired
-    private IngredienteRepository repository;
+    private IngredienteService ingredienteService;
 
     @GetMapping
     public String index(@RequestParam(name = "search", required = false, defaultValue = "") String search,
@@ -31,9 +31,9 @@ public class IngredienteController {
         List<Ingrediente> ingredienti;
 
         if (!search.isEmpty()) {
-            ingredienti = repository.findByNomeContainingIgnoreCase(search);
+            ingredienti = ingredienteService.findByName(search);
         } else {
-            ingredienti = repository.findAll();
+            ingredienti = ingredienteService.findAll();
         }
 
         model.addAttribute("ingredienti", ingredienti);
@@ -55,14 +55,14 @@ public class IngredienteController {
             return "ingredienti/create-or-edit";
         }
 
-        repository.save(formIngrediente);
+        ingredienteService.create(formIngrediente);
 
         return "redirect:/ingredients";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("ingrediente", repository.findById(id).get());
+        model.addAttribute("ingrediente", ingredienteService.getById(id));
         model.addAttribute("edit", true);
 
         return "ingredienti/create-or-edit";
@@ -75,7 +75,7 @@ public class IngredienteController {
             return "ingredients/create-or-edit";
         }
 
-        repository.save(newIngrediente);
+        ingredienteService.update(newIngrediente);
 
         return "redirect:/ingredients";
     }
@@ -83,13 +83,13 @@ public class IngredienteController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        Ingrediente ingredienteDaEliminare = repository.findById(id).get();
+        Ingrediente ingredienteDaEliminare = ingredienteService.getById(id);
 
         for (Pizza pizzaCollegata : ingredienteDaEliminare.getPizze()) {
             pizzaCollegata.getIngredienti().remove(ingredienteDaEliminare);
         }
 
-        repository.delete(ingredienteDaEliminare);
+        ingredienteService.delete(ingredienteDaEliminare);
 
         return "redirect:/ingredients";
     }

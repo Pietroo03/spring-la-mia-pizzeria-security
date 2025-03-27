@@ -18,10 +18,6 @@ public class PizzaService {
     @Autowired
     private OffertaSpecialeService offertaSpecialeService;
 
-    PizzaService(OffertaSpecialeService offertaSpecialeService) {
-        this.offertaSpecialeService = offertaSpecialeService;
-    }
-
     public List<Pizza> findAll() {
         return pizzaRepository.findAll();
     }
