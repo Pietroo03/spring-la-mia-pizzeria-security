@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.OffertaSpeciale;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.Pizza;
-import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.IngredienteRepository;
+import org.exercise.spring.spring_la_mia_pizzeria_crud.service.IngredienteService;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.service.OffertaSpecialeService;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class PizzaController {
     private OffertaSpecialeService offertaSpecialeService;
 
     @Autowired
-    private IngredienteRepository ingredienteRepository;
+    private IngredienteService ingredienteService;
 
     @GetMapping
     public String index(@RequestParam(name = "search", required = false, defaultValue = "") String search,
@@ -60,7 +60,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
-        model.addAttribute("ingredienti", ingredienteRepository.findAll());
+        model.addAttribute("ingredienti", ingredienteService.findAll());
 
         return "pizzas/create";
     }
@@ -68,7 +68,7 @@ public class PizzaController {
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("ingredienti", ingredienteRepository.findAll());
+            model.addAttribute("ingredienti", ingredienteService.findAll());
             return "pizzas/create";
         }
 
@@ -79,7 +79,7 @@ public class PizzaController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("ingredienti", ingredienteRepository.findAll());
+        model.addAttribute("ingredienti", ingredienteService.findAll());
         model.addAttribute("pizza", pizzaService.getById(id));
 
         return "pizzas/edit";
@@ -88,7 +88,7 @@ public class PizzaController {
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("ingredienti", ingredienteRepository.findAll());
+            model.addAttribute("ingredienti", ingredienteService.findAll());
             return "pizzas/edit";
         }
 
