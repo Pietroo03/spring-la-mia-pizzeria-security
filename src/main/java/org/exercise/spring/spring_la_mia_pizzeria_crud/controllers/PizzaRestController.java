@@ -43,7 +43,7 @@ public class PizzaRestController {
         return new ResponseEntity<Pizza>(pizzaAttempt.get(), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Pizza store(@Valid @RequestBody Pizza pizza) {
         return pizzaService.create(pizza);
     }
