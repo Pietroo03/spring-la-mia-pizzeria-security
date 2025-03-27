@@ -17,6 +17,9 @@
                     alt="Immagine pizza">
                 <div class="card-body">
                     <h5 class="card-title" th:text="*{nome}"></h5>
+                    <p class="card-text"><strong>Ingredienti:</strong>
+                        <span th:each="ingrediente : ${pizza.ingredienti}" th:text="|${ingrediente.nome} |"></span>
+                    </p>
                     <p class="card-text" th:text="*{descrizione}"></p>
                     <p class="card-text fw-bold">Prezzo: €<span th:text="*{prezzo}"></span></p>
                     <div class="d-flex justify-content-around">

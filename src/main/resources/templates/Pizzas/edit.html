@@ -21,12 +21,13 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <div class="ingredient" th:each="ingrediente : ${ingredienti}">
-                    <input type="checkbox" th:field="${pizza.ingredienti}" th:value="${ingrediente.id}"
-                        id="|ingrediente-${ingrediente.id}|">
-                    <label th:for="|ingrediente-${ingrediente.id}|" class="form-check-label"
-                        th:text="${ingrediente.nome}" />
+            <div class="mb-3 d-flex flex-wrap gap-3">
+                <div class="form-check form-check-inline" th:each="ingrediente : ${ingredienti}">
+                    <input class="form-check-input" type="checkbox" th:field="*{ingredienti}"
+                        th:value="${ingrediente.id}" th:id="'ingrediente-' + ${ingrediente.id}"
+                        style="transform: scale(1.5);">
+                    <label class="form-check-label ms-1" th:for="'ingrediente-' + ${ingrediente.id}"
+                        th:text="${ingrediente.nome}"></label>
                 </div>
             </div>
 

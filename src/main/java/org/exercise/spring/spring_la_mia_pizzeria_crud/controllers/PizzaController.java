@@ -72,9 +72,9 @@ public class PizzaController {
             return "pizzas/create";
         }
 
-        pizzaService.create(formPizza);
+        Pizza newPizza = pizzaService.create(formPizza);
 
-        return "redirect:/pizzas";
+        return "redirect:/pizzas/" + newPizza.getId();
     }
 
     @GetMapping("/edit/{id}")
@@ -92,9 +92,9 @@ public class PizzaController {
             return "pizzas/edit";
         }
 
-        pizzaService.update(formPizza);
+        Pizza newPizza = pizzaService.update(formPizza);
 
-        return "redirect:/pizzas";
+        return "redirect:/pizzas/" + newPizza.getId();
     }
 
     @PostMapping("/delete/{id}")
