@@ -2,7 +2,8 @@ package org.exercise.spring.spring_la_mia_pizzeria_crud.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizzas")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Pizza {
 
     @Id
@@ -41,11 +43,9 @@ public class Pizza {
     private Integer prezzo;
 
     @OneToMany(mappedBy = "pizza")
-    @JsonIgnoreProperties("offerteSpeciali")
     private List<OffertaSpeciale> offerteSpeciali;
 
     @ManyToMany
-    @JsonIgnoreProperties("ingredienti")
     @JoinTable(name = "ingrediente_pizza", joinColumns = @JoinColumn(name = "pizza_id"), inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
     private List<Ingrediente> ingredienti;
 

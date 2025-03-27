@@ -2,7 +2,7 @@ package org.exercise.spring.spring_la_mia_pizzeria_crud.model;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,7 +39,7 @@ public class OffertaSpeciale {
     private String nome;
 
     @ManyToOne
-    @JsonIgnoreProperties("pizza")
+    @JsonIgnore
     @JoinColumn(name = "pizza_id", nullable = false)
     private Pizza pizza;
 
