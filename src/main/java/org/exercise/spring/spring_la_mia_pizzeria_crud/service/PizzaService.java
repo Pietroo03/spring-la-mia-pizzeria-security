@@ -1,6 +1,7 @@
 package org.exercise.spring.spring_la_mia_pizzeria_crud.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.OffertaSpeciale;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.Pizza;
@@ -30,6 +31,10 @@ public class PizzaService {
         return pizzaRepository.findAll(Sort.by("prezzo"));
     }
 
+    public Optional<Pizza> findById(Integer id) {
+        return pizzaRepository.findById(id);
+    }
+
     public Pizza getById(Integer id) {
         return pizzaRepository.findById(id).get();
     }
@@ -39,6 +44,7 @@ public class PizzaService {
     }
 
     public Pizza create(Pizza pizza) {
+        System.out.println("Creando pizza: " + pizza);
         return pizzaRepository.save(pizza);
     }
 

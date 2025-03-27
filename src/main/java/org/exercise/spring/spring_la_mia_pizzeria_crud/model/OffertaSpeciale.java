@@ -2,6 +2,8 @@ package org.exercise.spring.spring_la_mia_pizzeria_crud.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,10 +25,6 @@ public class OffertaSpeciale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "pizza_id", nullable = false)
-    private Pizza pizza;
-
     @NotNull
     @PastOrPresent(message = "Inserire una data valida")
     @Column(name = "data_inizio")
@@ -39,6 +37,11 @@ public class OffertaSpeciale {
 
     @NotBlank(message = "Il nome non può essere vuoto")
     private String nome;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "pizza_id", nullable = false)
+    private Pizza pizza;
 
     public Pizza getPizza() {
         return pizza;
