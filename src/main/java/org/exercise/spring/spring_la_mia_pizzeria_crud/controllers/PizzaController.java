@@ -5,7 +5,7 @@ import java.util.List;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.OffertaSpeciale;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.Pizza;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.IngredienteRepository;
-import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.OffertaSpecialeRepository;
+import org.exercise.spring.spring_la_mia_pizzeria_crud.service.OffertaSpecialeService;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class PizzaController {
     private PizzaService pizzaService;
 
     @Autowired
-    private OffertaSpecialeRepository offertaSpecialeRepository;
+    private OffertaSpecialeService offertaSpecialeService;
 
     @Autowired
     private IngredienteRepository ingredienteRepository;
@@ -103,7 +103,7 @@ public class PizzaController {
         Pizza pizza = pizzaService.getById(id);
 
         for (OffertaSpeciale offertaDaCancellare : pizza.getOfferteSpeciali()) {
-            offertaSpecialeRepository.delete(offertaDaCancellare);
+            offertaSpecialeService.delete(offertaDaCancellare);
         }
 
         pizzaService.delete(pizza);

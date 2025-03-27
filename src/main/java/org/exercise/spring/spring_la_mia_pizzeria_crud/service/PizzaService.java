@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.OffertaSpeciale;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.Pizza;
-import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.OffertaSpecialeRepository;
 import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -17,7 +16,11 @@ public class PizzaService {
     private PizzaRepository pizzaRepository;
 
     @Autowired
-    private OffertaSpecialeRepository offertaSpecialeRepository;
+    private OffertaSpecialeService offertaSpecialeService;
+
+    PizzaService(OffertaSpecialeService offertaSpecialeService) {
+        this.offertaSpecialeService = offertaSpecialeService;
+    }
 
     public List<Pizza> findAll() {
         return pizzaRepository.findAll();
@@ -50,7 +53,7 @@ public class PizzaService {
     public void delete(Pizza pizza) {
 
         for (OffertaSpeciale offertaDaCancellare : pizza.getOfferteSpeciali()) {
-            offertaSpecialeRepository.delete(offertaDaCancellare);
+            offertaSpecialeService.delete(offertaDaCancellare);
         }
 
         pizzaRepository.delete(pizza);
@@ -61,7 +64,7 @@ public class PizzaService {
         Pizza pizza = getById(id);
 
         for (OffertaSpeciale offertaDaCancellare : pizza.getOfferteSpeciali()) {
-            offertaSpecialeRepository.delete(offertaDaCancellare);
+            offertaSpecialeService.delete(offertaDaCancellare);
         }
 
         pizzaRepository.delete(pizza);

@@ -1,7 +1,7 @@
 package org.exercise.spring.spring_la_mia_pizzeria_crud.controllers;
 
 import org.exercise.spring.spring_la_mia_pizzeria_crud.model.OffertaSpeciale;
-import org.exercise.spring.spring_la_mia_pizzeria_crud.repository.OffertaSpecialeRepository;
+import org.exercise.spring.spring_la_mia_pizzeria_crud.service.OffertaSpecialeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 public class OffertaSpecialeController {
 
     @Autowired
-    private OffertaSpecialeRepository repository;
+    private OffertaSpecialeService offertaSpecialeService;
 
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("offertaSpeciale") OffertaSpeciale newOffer, BindingResult bindingResult,
@@ -29,14 +29,14 @@ public class OffertaSpecialeController {
             return "offerte/create-or-edit";
         }
 
-        repository.save(newOffer);
+        offertaSpecialeService.create(newOffer);
 
         return "redirect:/pizzas/" + newOffer.getPizza().getId();
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("offertaSpeciale", repository.findById(id).get());
+        model.addAttribute("offertaSpeciale", offertaSpecialeService.getById(id));
         model.addAttribute("edit", true);
 
         return "offerte/create-or-edit";
@@ -49,14 +49,14 @@ public class OffertaSpecialeController {
             return "offerte/create-or-edit";
         }
 
-        repository.save(newOffer);
+        offertaSpecialeService.update(newOffer);
 
         return "redirect:/pizzas/" + newOffer.getPizza().getId();
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        repository.deleteById(id);
+        offertaSpecialeService.deleteById(id);
 
         return "redirect:/pizzas";
     }
