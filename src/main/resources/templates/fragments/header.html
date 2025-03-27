@@ -6,20 +6,23 @@
 </head>
 
 <body>
-    <header th:fragment="header" class="p-4 bg-light">
+    <header th:fragment="header(map, object, redirectPage, redirectName)" class="p-4 bg-light">
         <nav class="navbar">
             <div class="container-fluid">
 
-                <h1>La pizzeria di Pietro</h1>
+                <div class="d-flex align-items-center">
+                    <h1>La pizzeria di Pietro</h1>
+                    <a class="btn btn-primary ms-4" th:href="@{|/${redirectPage}|}">[[${redirectName}]]</a>
+                </div>
 
                 <div class="d-flex gap-4">
-                    <form th:action="@{/pizzas}" method="get" class="d-flex">
-                        <input type="text" name="search" class="form-control me-2" placeholder="Cerca una pizza..."
+                    <form th:action="@{|/${map}|}" method="get" class="d-flex">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Cerca ..."
                             th:value="${search}">
                         <button type="submit" class="btn btn-outline-primary">Cerca</button>
                     </form>
 
-                    <a class="btn btn-primary" th:href="@{/pizzas/create}">Aggiungi Pizza</a>
+                    <a class="btn btn-primary" th:href="@{|/${map}/create|}">Aggiungi [[${object}]]</a>
                 </div>
             </div>
         </nav>

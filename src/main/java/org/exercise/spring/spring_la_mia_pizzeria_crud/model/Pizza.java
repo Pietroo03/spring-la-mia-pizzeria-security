@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -38,20 +41,16 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     private List<OffertaSpeciale> offerteSpeciali;
 
+    @ManyToMany
+    @JoinTable(name = "ingrediente_pizza", joinColumns = @JoinColumn(name = "pizza_id"), inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
+    private List<Ingrediente> ingredienti;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<OffertaSpeciale> getOfferteSpeciali() {
-        return offerteSpeciali;
-    }
-
-    public void setOfferteSpeciali(List<OffertaSpeciale> offerteSpeciali) {
-        this.offerteSpeciali = offerteSpeciali;
     }
 
     public String getNome() {
@@ -84,6 +83,22 @@ public class Pizza {
 
     public void setPrezzo(Integer prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public List<OffertaSpeciale> getOfferteSpeciali() {
+        return offerteSpeciali;
+    }
+
+    public void setOfferteSpeciali(List<OffertaSpeciale> offerteSpeciali) {
+        this.offerteSpeciali = offerteSpeciali;
+    }
+
+    public List<Ingrediente> getIngredienti() {
+        return ingredienti;
+    }
+
+    public void setIngredienti(List<Ingrediente> ingredienti) {
+        this.ingredienti = ingredienti;
     }
 
 }

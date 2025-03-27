@@ -7,7 +7,8 @@
 
 <body>
 
-    <th:block th:replace="fragments/header :: header"></th:block>
+    <th:block th:replace="fragments/header :: header('pizzas', 'pizza', 'ingredients', 'lista ingredienti')">
+    </th:block>
 
     <div class="container mt-5">
         <h1 class="text-center mb-4">Menù Pizze</h1>
@@ -19,6 +20,9 @@
                         alt="Immagine pizza">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title" th:text="*{nome}"></h5>
+                        <p class="card-text"><strong>Ingredienti:</strong>
+                            <span th:each="ingrediente : ${pizza.ingredienti}" th:text="|${ingrediente.nome} |"></span>
+                        </p>
                         <p class="card-text" th:text="*{descrizione}"></p>
                         <p class="card-text fw-bold">Prezzo: €[[*{prezzo}]]</p>
                         <a th:href="@{/pizzas/{id}(id=${pizza.id})}" class="btn btn-primary mt-auto">Vedi dettaglio</a>
