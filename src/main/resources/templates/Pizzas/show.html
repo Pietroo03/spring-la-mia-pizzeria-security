@@ -24,12 +24,15 @@
                     <p class="card-text fw-bold">Prezzo: €<span th:text="*{prezzo}"></span></p>
                     <div class="d-flex justify-content-around">
                         <a th:href="@{/pizzas}" class="btn btn-secondary">Torna al Menù</a>
-                        <a th:href="@{/pizzas/edit/{id} (id = ${pizza.id})}" class="btn btn-warning">Modifica</a>
-                        <a th:href="@{/pizzas/{id}/new_offer (id = ${pizza.id})}" class="btn btn-primary">Aggiungi
+                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/pizzas/edit/{id} (id = ${pizza.id})}"
+                            class="btn btn-warning">Modifica</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/pizzas/{id}/new_offer (id = ${pizza.id})}"
+                            class="btn btn-primary">Aggiungi
                             offerta</a>
 
                         <!-- Button trigger modal -->
-                        <th:button th:replace="fragments/delete-button :: button(${pizza.id})"></th:button>
+                        <th:button sec:authorize="hasAuthority('ADMIN')"
+                            th:replace="fragments/delete-button :: button(${pizza.id})"></th:button>
 
                         <!-- Modal -->
                         <div th:replace="fragments/modal :: modal(${pizza.id}, ${pizza.nome}, 'la pizza', 'pizzas')">
@@ -54,10 +57,12 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title text-primary fw-bold" th:text="${offerta.nome}"></h5>
                             <div>
-                                <a th:href="@{/offers/edit/{id} (id = ${offerta.id})}"
+                                <a sec:authorize="hasAuthority('ADMIN')"
+                                    th:href="@{/offers/edit/{id} (id = ${offerta.id})}"
                                     class="btn btn-sm btn-warning">Modifica</a>
                                 <!-- Button trigger modal -->
-                                <th:button th:replace="fragments/delete-button :: button(${offerta.id})"></th:button>
+                                <th:button sec:authorize="hasAuthority('ADMIN')"
+                                    th:replace="fragments/delete-button :: button(${offerta.id})"></th:button>
 
                                 <!-- Modal -->
                                 <div
